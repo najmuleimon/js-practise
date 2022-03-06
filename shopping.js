@@ -45,18 +45,13 @@ const getLocal = () => {
 }
 // add product to local storage
 const addToLocal = (name, price) => {
-    const cart = getLocal()
-
-    // if (cart[name] && cart[price]) {
-    //     cart[name] = cart[name] + 1;
-    //     cart[price] = cart[price] + 1;
-    // }
-    // else {
-    //     cart[name] = 1;
-    //     cart[price] = 1;
-    // }
-    cart[name] = name,
-    cart[price] = price
+    let cart = getLocal()
+    if(cart[name]){
+        cart[name] = cart[name] + parseInt(price)
+    }
+    else{
+        cart[name] = parseInt(price)
+    }
 
     const jsonString = JSON.stringify(cart)
     localStorage.setItem('cart', jsonString)
@@ -65,10 +60,11 @@ const addToLocal = (name, price) => {
 // display from local storage
 const displayLocal = () => {
     const cart  = getLocal()
-
-    for(const name in cart){
-        displayProduct(name)
+    console.log(cart);
+    for (const name in cart) {
+        displayProduct(name, cart[name])
     }
+    
 }
 
 displayLocal()
